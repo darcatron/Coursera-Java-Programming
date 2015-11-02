@@ -9,7 +9,8 @@ import edu.duke.*;
 import java.io.*;
 
 public class TagFinder {
-    public String findProtein(String dna) {
+    public StorageResource findProtein(String dna) {
+        StorageResource genes = new StorageResource();
         dna = dna.toLowerCase();
         int start = dna.indexOf("atg");
         int stop_tag = dna.indexOf("tag", start + 3);
@@ -21,11 +22,11 @@ public class TagFinder {
         while (true) {
             if (start == -1) {
                 // no start codon found
-                return "";
+                return genes;
             }
             if (stop_tag == -1 && stop_tga == -1 && stop_taa == -1) {
                 // no stop codon found
-                return "";
+                return genes;
             }
             
             if (stop_tag != -1) {
@@ -61,7 +62,7 @@ public class TagFinder {
                 }
             }
             if (smallest_stop != 0) {
-                System.out.println(dna.substring(start, smallest_stop + 3));
+                genes.add(dna.substring(start, smallest_stop + 3));
             }
 
             if (smallest_stop == 0) {
@@ -78,33 +79,42 @@ public class TagFinder {
         }
     }
     
-    
-    public void testing() {
-        String a = "cccatggggtttaaataataataggagagagagagagagttt";
-        String ap = "atggggtttaaataataatag";
-        //String a = "atgcctag";
-        //String ap = "";
-        //String a = "ATGCCCTAG";
-        //String ap = "ATGCCCTAG";
-        String result = findProtein(a);
-        if (ap.equals(result)) {
-            System.out.println("success for " + ap + " length " + ap.length());
-        }
-        else {
-            System.out.println("mistake for input: " + a);
-            System.out.println("got: " + result);
-            System.out.println("not: " + ap);
-        }
-    }
 
     public void realTesting() {
         DirectoryResource dr = new DirectoryResource();
         for (File f : dr.selectedFiles()) {
             FileResource fr = new FileResource(f);
             String s = fr.asString();
-            System.out.println("read " + s.length() + " characters");
-            String result = findProtein(s);
-            System.out.println("found " + result);
+
+            StorageResource result = findProtein(s);
+            System.out.println("found " + result.size() + " genes");
+
+            int num_over_60 = 0;
+            int num_cg_over_35 = 0;
+            int num_ctg = (s.length() - s.toLowerCase().replace("ctg", "").length()) / 3;
+            System.out.println("found CTG " + num_ctg + " times");            
+            int longest_gene = 0;
+
+            for (String gene : result.data()) {
+                if (gene.length() > 60) {
+                    num_over_60 = num_over_60 + 1;
+                }
+
+                float num_c = gene.length() - gene.replace("c", "").length();
+                float num_g = gene.length() - gene.replace("g", "").length();
+                float ratio = (num_c + num_g) / gene.length();
+                if (ratio > .35) {
+                    num_cg_over_35 = num_cg_over_35 + 1;
+                }
+
+                if (gene.length() > longest_gene) {
+                    longest_gene = gene.length();
+                }
+
+            }
+            System.out.println("found " + num_over_60 + " genes over 60");
+            System.out.println("found " + num_cg_over_35 + " genes over .35 cg");
+            System.out.println("longest_gene: " + longest_gene);
         }
     }
 }
