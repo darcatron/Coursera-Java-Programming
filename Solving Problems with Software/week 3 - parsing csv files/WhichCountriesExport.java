@@ -44,7 +44,7 @@ public class WhichCountriesExport {
 		CSVParser parser = fr.getCSVParser();
 		StorageResource items = new StorageResource();
 
-		items.add("gold");
+		items.add("cocoa");
 		listExporters(parser, items);
 	}
 

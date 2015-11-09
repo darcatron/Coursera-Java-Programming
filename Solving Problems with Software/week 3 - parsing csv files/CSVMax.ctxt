@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.params=parser
+comment0.target=org.apache.commons.csv.CSVRecord\ hottestHourInFile(org.apache.commons.csv.CSVParser)
+comment1.params=
+comment1.target=org.apache.commons.csv.CSVRecord\ hottestInManyDays()
+comment2.params=parser
+comment2.target=org.apache.commons.csv.CSVRecord\ coldestHourInFile(org.apache.commons.csv.CSVParser)
+comment3.params=
+comment3.target=void\ fileWithColdestTemp()
+comment4.params=currentRow\ largestSoFar
+comment4.target=org.apache.commons.csv.CSVRecord\ getLargestOfTwo(org.apache.commons.csv.CSVRecord,\ org.apache.commons.csv.CSVRecord)
+comment5.params=current_row\ smallest_so_far\ col_name
+comment5.target=org.apache.commons.csv.CSVRecord\ getSmallestOfTwo(org.apache.commons.csv.CSVRecord,\ org.apache.commons.csv.CSVRecord,\ java.lang.String)
+comment6.params=current_file\ smallest_so_far
+comment6.target=java.io.File\ coldestFileOfTwo(java.io.File,\ java.io.File)
+comment7.params=parser
+comment7.target=org.apache.commons.csv.CSVRecord\ lowestHumidityInFile(org.apache.commons.csv.CSVParser)
+comment8.params=
+comment8.target=void\ lowestHumidityInManyFiles()
+comment9.params=humidity
+comment9.target=void\ avgTempInFile(int)
+numComments=10
